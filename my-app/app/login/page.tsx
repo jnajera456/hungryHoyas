@@ -23,14 +23,12 @@ export default function LoginPage() {
     );
   }, [firstName, lastName, email]);
 
-  function handleNext() {
-    if (!canContinue) return;
+ function handleNext() {
+  if (!canContinue) return;
 
-    // Optional: store for later steps
-    // localStorage.setItem("hungryHoyas_profile", JSON.stringify({ firstName, lastName, email }));
-
-    router.push("/login/step-2");
-  }
+  router.push("/login/step-2");
+}
+  
 
   return (
     <div className={styles.page}>
@@ -130,13 +128,13 @@ export default function LoginPage() {
             </div>
 
             <button
-              type="button"
-              className={styles.nextBtn}
-              onClick={handleNext}
-              disabled={!canContinue}
-            >
-              Next
-            </button>
+  type="button"
+  className={styles.nextBtn}
+  onClick={handleNext}
+  disabled={!canContinue}
+>
+  Next
+</button>
           </div>
         </div>
       </main>

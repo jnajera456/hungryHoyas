@@ -1,0 +1,336 @@
+/* Mobile-first "app" container */
+.page {
+  min-height: 100svh;
+  background: #f5f7fb;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  min-height: 100svh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin: 24px 0;
+    min-height: calc(100svh - 48px);
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(16, 24, 40, 0.12);
+    overflow: hidden;
+  }
+}
+
+/* Make buttons behave consistently */
+.bottomNav button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+}
+
+.container svg {
+  display: block;
+}
+
+/* ---------- Top Bar ---------- */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 18px 10px 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.roundLogo {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0f4b86, #1e6bb8);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.roundLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brandText {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #0f2f55;
+}
+
+.topRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #f1f5fb;
+  display: grid;
+  place-items: center;
+  color: #0f4b86;
+}
+
+.iconBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Step ---------- */
+.stepWrap {
+  padding: 0 18px 6px 18px;
+}
+
+.stepText {
+  color: #93a3b8;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.stepTrack {
+  height: 6px;
+  border-radius: 999px;
+  background: #e9eff7;
+  overflow: hidden;
+}
+
+.stepFill {
+  height: 100%;
+  border-radius: 999px;
+  background: #0f4b86;
+}
+
+/* ---------- Title ---------- */
+.title {
+  margin: 10px 18px 6px 18px;
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+  color: #0b2540;
+}
+
+/* ---------- Form ---------- */
+.form {
+  padding: 10px 18px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 360px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  color: #6b7c93;
+  font-weight: 600;
+}
+
+.inlineInputs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid #e3eaf4;
+  background: #ffffff;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #0b2540;
+  outline: none;
+}
+
+.input::placeholder {
+  color: #a8b4c6;
+}
+
+.selectLike {
+  position: relative;
+  width: 100%;
+}
+
+.selectInput {
+  width: 100%;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid #e3eaf4;
+  background: #ffffff;
+  padding: 0 34px 0 12px;
+  font-size: 14px;
+  color: #0b2540;
+  outline: none;
+}
+
+.chev {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #7e91aa;
+  pointer-events: none;
+}
+
+.unitPill {
+  height: 42px;
+  min-width: 46px;
+  border-radius: 12px;
+  border: 1px solid #e3eaf4;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7e91aa;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* ---------- Segmented ---------- */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.segmented {
+  background: #eef3fa;
+  border-radius: 16px;
+  padding: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.segBtn {
+  height: 44px;
+  border-radius: 14px;
+
+  background-color: transparent;
+  border: 1.5px solid transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+
+  color: #64748b;
+
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+
+.segActive {
+  background-color: #e2e8f0;
+  border-color: #94a3b8;
+  color: #0b2540;
+}
+
+.segText {
+  white-space: nowrap;
+}
+
+/* nice mobile tap feedback */
+.segBtn:active {
+  transform: scale(0.98);
+}
+
+
+/* ---------- Primary Button ---------- */
+.primaryBtn {
+  margin-top: auto;
+  height: 52px;
+  border-radius: 14px;
+  background: #0f4b86;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 20px rgba(15, 75, 134, 0.22);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---------- Bottom Nav ---------- */
+.bottomNav {
+  height: 74px;
+  border-top: 1px solid #edf2f8;
+  background: #ffffff;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 8px 6px 10px 6px;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #94a3b8;
+}
+
+.navIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.navLabel {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.navActive {
+  color: #0f4b86;
+}
