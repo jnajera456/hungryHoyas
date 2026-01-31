@@ -60,7 +60,7 @@ export default function Home() {
             <FeatureItem text="AI plate suggestions from today's menu" />
           </ul>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
               href="/onboarding"
               className="inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 sm:w-auto"
@@ -73,6 +73,13 @@ export default function Home() {
               className="inline-flex w-full items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-base font-semibold text-zinc-900 shadow-sm hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 sm:w-auto"
             >
               Continue <span className="ml-2 text-zinc-400">›</span>
+            </a>
+
+            <a
+              href="/mission"
+              className="inline-flex w-full items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-base font-semibold text-zinc-600 shadow-sm hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-900 sm:w-auto"
+            >
+              Our Mission
             </a>
           </div>
 
@@ -126,6 +133,13 @@ export default function Home() {
                     </a>{" "}
                     ›
                   </div>
+
+                  <a
+                    href="/mission"
+                    className="mt-3 inline-block text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                  >
+                    Our Mission
+                  </a>
 
                   <p className="mt-4 text-xs text-zinc-400">
                     Not affiliated with Georgetown Dining
