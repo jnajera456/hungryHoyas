@@ -1,60 +1,80 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import styles from "./step-2.module.css"; // keep this path if css is in app/login/login.module.css
 import { useRouter } from "next/navigation";
+import styles from "./step-3.module.css";
 
-type Goal = "Cut" | "Maintain" | "Bulk";
-type Activity = "Light" | "Moderate" | "High";
-type Strictness = "Chill" | "Balanced" | "Strict";
+type MacroStrictness = "Chill" | "Balanced" | "Strict";
+type Dietary = "Vegetarian" | "Halal" | "Allergens" | "None";
 
 export default function Page() {
-    const router = useRouter();
-  const [heightFt, setHeightFt] = useState("");
-  const [heightIn, setHeightIn] = useState("");
-  const [weightLbs, setWeightLbs] = useState("");
+  const router = useRouter();
 
-  const [goal, setGoal] = useState<Goal>("Maintain");
-  const [activity, setActivity] = useState<Activity>("Moderate");
-  const [strictness, setStrictness] = useState<Strictness>("Balanced");
+  const stepText = "Step 3 of 3";
+  const progressPct = 100;
+
+  const [dietary, setDietary] = useState<Set<Dietary>>(new Set(["None"]));
+  const [macroStrictness, setMacroStrictness] = useState<MacroStrictness>("Balanced");
+  const [macroGuidance, setMacroGuidance] = useState<MacroStrictness>("Balanced");
+
+  const dietaryList = useMemo(() => Array.from(dietary), [dietary]);
+
+  function toggleDietary(option: Dietary) {
+    setDietary((prev) => {
+      const next = new Set(prev);
+
+      // "None" behaves as mutually exclusive with everything else
+      if (option === "None") {
+        next.clear();
+        next.add("None");
+        return next;
+      }
+
+      // Selecting any non-None removes None
+      if (next.has("None")) next.delete("None");
+
+      // Toggle selected option
+      if (next.has(option)) next.delete(option);
+      else next.add(option);
+
+      // If user deselects everything, fall back to None
+      if (next.size === 0) next.add("None");
+
+      return next;
+    });
+  }
 
   const canContinue = useMemo(() => true, []);
-
-  // Step 2 of 3
-  const stepText = "Step 2 of 3";
-  const progressPct = 66.6667;
 
   return (
     <div className={styles.page}>
       <main className={styles.container}>
+        {/* Top bar */}
         <header className={styles.topBar}>
           <div className={styles.brand}>
-            {/* Round logo: drop your actual image in /public/logo-round.png */}
             <div className={styles.roundLogo} aria-hidden>
-              {/* If you add an image, it will render; otherwise fallback stays visible */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className={styles.roundLogoImg}
                 src="/HungryHoyasAppLogo.png"
                 alt="HungryHoyas logo"
                 onError={(e) => {
-                  // hide broken image icon if file doesn't exist
                   (e.currentTarget as HTMLImageElement).style.display = "none";
                 }}
               />
             </div>
-
             <span className={styles.brandText}>HungryHoyas</span>
           </div>
 
           <div className={styles.topRight}>
-            <button className={styles.iconBtn} aria-label="Account">
+            <button className={styles.iconBtn} aria-label="Account" type="button">
               <UserIcon />
             </button>
             {/* initials removed */}
           </div>
         </header>
 
+        {/* Step indicator */}
         <div className={styles.stepWrap}>
           <div className={styles.stepText}>{stepText}</div>
           <div className={styles.stepTrack} aria-hidden>
@@ -62,91 +82,66 @@ export default function Page() {
           </div>
         </div>
 
-        <h1 className={styles.title}>Let’s set up your profile</h1>
+        {/* Body */}
+        <div className={styles.body}>
+          <h1 className={styles.headline}>You’re all set!</h1>
+          <p className={styles.subhead}>Tell us about your profile (last step):</p>
 
-        <div className={styles.form}>
-          <div className={styles.twoCol}>
-            <div className={styles.field}>
-              <label className={styles.label}>Height</label>
-              <div className={styles.inlineInputs}>
-                <input
-                  className={styles.input}
-                  inputMode="numeric"
-                  placeholder="ft"
-                  value={heightFt}
-                  onChange={(e) => setHeightFt(e.target.value)}
-                />
+          {/* Dietary - multi-select */}
+          <section className={styles.section}>
+            <div className={styles.sectionLabel}>Dietary</div>
 
-                <div className={styles.selectLike}>
-                  <input
-                    className={styles.selectInput}
-                    inputMode="numeric"
-                    placeholder="in"
-                    value={heightIn}
-                    onChange={(e) => setHeightIn(e.target.value)}
-                  />
-                  <ChevronDown className={styles.chev} />
-                </div>
-              </div>
+            <div className={styles.multiRow} role="group" aria-label="Dietary restrictions">
+              {(["None", "Vegetarian", "Halal", "Allergens"] as const).map((opt) => {
+                const active = dietary.has(opt);
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    className={`${styles.pillBtn} ${active ? styles.pillActive : ""}`}
+                    onClick={() => toggleDietary(opt)}
+                    aria-pressed={active}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
             </div>
 
-            <div className={styles.field}>
-              <label className={styles.label}>Weight</label>
-              <div className={styles.inlineInputs}>
-                <input
-                  className={styles.input}
-                  inputMode="numeric"
-                  placeholder="lbs"
-                  value={weightLbs}
-                  onChange={(e) => setWeightLbs(e.target.value)}
-                />
-                <div className={styles.unitPill} aria-hidden>
-                  lbs
-                </div>
-              </div>
+            {/* optional: tiny debug-ish visibility without looking like debug */}
+            <div className={styles.helperText}>
+              Selected: {dietaryList.join(", ")}
             </div>
-          </div>
+          </section>
 
-          <div className={styles.block}>
-            <div className={styles.label}>Goal</div>
-           <Segmented<Goal>
-  label="Goal"
-  value={goal}
-  onChange={setGoal}
-  options={["Cut", "Maintain", "Bulk"]}
-/>
-          </div>
+          {/* Macro strictness - single select */}
+          <section className={styles.section}>
+            <div className={styles.sectionLabel}>Macro strictness</div>
 
-          <div className={styles.block}>
-            <div className={styles.label}>Activity</div>
-            <Segmented<Activity>
-  label="Activity"
-  value={activity}
-  onChange={setActivity}
-  options={["Light", "Moderate", "High"]}
-/>
-          </div>
+            <Segmented<MacroStrictness>
+              label="Macro strictness"
+              value={macroStrictness}
+              onChange={setMacroStrictness}
+              options={["Chill", "Balanced", "Strict"]}
+            />
+          </section>
 
-          <div className={styles.block}>
-            <div className={styles.label}>How strict should I be about macros?</div>
-            <Segmented<Strictness>
-  label="Macro strictness"
-  value={strictness}
-  onChange={setStrictness}
-  options={["Chill", "Balanced", "Strict"]}
-/>
-          </div>
 
+          {/* CTA */}
           <button
-  className={styles.primaryBtn}
-  disabled={!canContinue}
-  type="button"
-  onClick={() => router.push("/login/step-3")}
->
-  Next
-</button>
+            className={styles.primaryBtn}
+            disabled={!canContinue}
+            type="button"
+            onClick={() => {
+              // Change this route to whatever your "Today's Menu" page is
+              router.push("/menu/today");
+            }}
+          >
+            Go to Today&apos;s Menu
+          </button>
         </div>
 
+        {/* Bottom nav */}
         <nav className={styles.bottomNav} aria-label="Bottom navigation">
           <NavItem label="Home" active icon={<HomeIcon />} />
           <NavItem label="Plate" icon={<ForkIcon />} />
@@ -159,7 +154,7 @@ export default function Page() {
   );
 }
 
-/* ---------------- Components ---------------- */
+/* ---------------- Reusable pieces ---------------- */
 
 function NavItem({
   label,
@@ -190,14 +185,9 @@ function Segmented<T extends string>({
   label: string;
 }) {
   return (
-    <div
-      className={styles.segmented}
-      role="radiogroup"
-      aria-label={label}
-    >
+    <div className={styles.segmented} role="radiogroup" aria-label={label}>
       {options.map((opt) => {
         const isActive = opt === value;
-
         return (
           <button
             key={opt}
@@ -215,23 +205,47 @@ function Segmented<T extends string>({
   );
 }
 
+function MacroSlider({
+  value,
+  onChange,
+  options,
+}: {
+  value: MacroStrictness;
+  onChange: (v: MacroStrictness) => void;
+  options: readonly MacroStrictness[];
+}) {
+  const idx = options.indexOf(value);
+  const pct = idx === 0 ? 0 : idx === 1 ? 50 : 100;
 
-/* ---------------- Icons ---------------- */
-
-function ChevronDown({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M6.5 9.5 12 15l5.5-5.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <div className={styles.sliderWrap} role="radiogroup" aria-label="Macro guidance">
+      <div className={styles.sliderTrack} aria-hidden>
+        <div className={styles.sliderFill} style={{ width: `${pct}%` }} />
+        <div className={styles.sliderThumb} style={{ left: `${pct}%` }} />
+      </div>
+
+      <div className={styles.sliderLabels}>
+        {options.map((opt) => {
+          const active = opt === value;
+          return (
+            <button
+              key={opt}
+              type="button"
+              role="radio"
+              aria-checked={active}
+              className={`${styles.sliderLabelBtn} ${active ? styles.sliderLabelActive : ""}`}
+              onClick={() => onChange(opt)}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
+
+/* ---------------- Icons ---------------- */
 
 function UserIcon() {
   return (
@@ -296,5 +310,4 @@ function ProfileIcon() {
         fill="currentColor"
       />
     </svg>
-  );
-}
+  )}
