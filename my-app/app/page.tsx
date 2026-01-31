@@ -2,64 +2,162 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-zinc-50 font-sans text-zinc-900 dark:bg-black dark:text-zinc-100">
+      {/* Header */}
+      <header className="w-full border-b border-zinc-200 dark:border-zinc-800">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          {/* Circular Logo + Name */}
+          <div className="flex items-center gap-3">
+            <div className="relative h-10 w-10 overflow-hidden rounded-full border border-zinc-300 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-950">
+              <Image
+                src="/HungryHoyasAppLogo.png"
+                alt="Hungry Hoyas logo"
+                fill
+                priority
+                className="object-contain p-1"
+              />
+            </div>
+
+            <span className="text-lg font-semibold tracking-tight">
+              HungryHoyas
+            </span>
+          </div>
+
+          {/* Profile Icon */}
+          <button
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-900"
+            aria-label="Profile"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M20 21a8 8 0 0 0-16 0" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 pb-16 pt-8 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+        {/* Left Section */}
+        <section>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            Eat smarter in the dining hall
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="mt-3 max-w-prose text-base leading-relaxed text-zinc-600 dark:text-zinc-300 sm:text-lg">
+            Build the best plate from today&apos;s dining hall menu.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+          <ul className="mt-6 space-y-3">
+            <FeatureItem text="See what's open right now" />
+            <FeatureItem text="Hit your macros without guessing" />
+            <FeatureItem text="AI plate suggestions from today's menu" />
+          </ul>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="/onboarding"
+              className="inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 sm:w-auto"
+            >
+              Get Started
+            </a>
+
+            <a
+              href="/menu"
+              className="inline-flex w-full items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-base font-semibold text-zinc-900 shadow-sm hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 sm:w-auto"
+            >
+              Continue <span className="ml-2 text-zinc-400">›</span>
+            </a>
+          </div>
+
+          <p className="mt-6 text-sm text-zinc-400">
+            Not affiliated with Georgetown Dining
+          </p>
+        </section>
+
+        {/* Right Section – Phone Card */}
+        <section>
+          <div className="mx-auto w-full max-w-md">
+            <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+              <div className="h-6" />
+
+              <div className="px-6 pb-8 pt-6 text-center">
+                <div className="relative mx-auto h-56 w-56 sm:h-64 sm:w-64">
+                  <Image
+                    src="/HungryHoyasAppLogo.png"
+                    alt="Hungry Hoyas logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+
+                <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-300">
+                  Build the best plate from today&apos;s dining hall menu.
+                </p>
+
+                <div className="mt-6 space-y-3 text-left">
+                  <PhoneBullet text="See what's open right now" />
+                  <PhoneBullet text="Hit your macros without guessing" />
+                  <PhoneBullet text="AI plate suggestions from today's menu" />
+                </div>
+
+                <div className="mt-8">
+                  <a
+                    href="/onboarding"
+                    className="inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700"
+                  >
+                    Get Started
+                  </a>
+
+                  <div className="mt-3 text-sm text-zinc-500">
+                    Already set up?{" "}
+                    <a
+                      href="/menu"
+                      className="font-semibold text-zinc-800 hover:underline dark:text-zinc-100"
+                    >
+                      Continue
+                    </a>{" "}
+                    ›
+                  </div>
+
+                  <p className="mt-4 text-xs text-zinc-400">
+                    Not affiliated with Georgetown Dining
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
+    </div>
+  );
+}
+
+function FeatureItem({ text }: { text: string }) {
+  return (
+    <li className="flex items-start gap-3">
+      <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+        ✓
+      </span>
+      <span>{text}</span>
+    </li>
+  );
+}
+
+function PhoneBullet({ text }: { text: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-xl bg-zinc-50 px-4 py-3 shadow-sm">
+      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+        ✓
+      </span>
+      <span className="text-sm">{text}</span>
     </div>
   );
 }
