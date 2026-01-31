@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  nutritionGoals UserNutritionGoals?
+}
+
+model UserNutritionGoals {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goalCalories Int // Daily calorie target (kcal)
+  goalProtein  Int // Daily protein target (grams)
+  goalCarbs    Int // Daily carbs target (grams)
+  goalFat      Int // Daily fat target (grams)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
