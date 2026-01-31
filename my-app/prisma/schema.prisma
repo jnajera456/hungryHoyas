@@ -28,3 +28,26 @@ model UserNutritionGoals {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+model MenuItem {
+  id           String   @id @default(cuid())
+  recipeId     Int // Hoya Eats recipe ID
+  name         String
+  station      String? // "Grill", "True Balance", etc.
+  mealPeriod   String? // "Breakfast", "Lunch", "Dinner"
+  locationSlug String   @default("fresh-food-company")
+  servedDate   DateTime // which day's menu
+  dietaryTags  String[] // ["Vegan", "Vegetarian", "Made Without Gluten", "Pork"]
+  calories     Int?
+  protein      Int?
+  carbs        Int?
+  fat          Int?
+  servingSize  String? // "2 Tbsp", "¼ cup"
+  allergens    String?
+  ingredients  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([recipeId, servedDate, locationSlug])
+  @@index([servedDate, locationSlug, mealPeriod])
+}
